@@ -44,3 +44,11 @@ def test_subsequent_same_title_add_link_increments_counter():
 
     assert page1.links[title2] == 2
 
+def test_Web_Graph_add_page_adds_page_to_pages():
+    title1 = "Best Credit Cards"
+    test_page = WG.Page(title1)
+
+    test_graph = WG.WebGraph()
+    test_graph.add_page(test_page)
+
+    assert test_graph.pages[test_page.title].title == test_page.title

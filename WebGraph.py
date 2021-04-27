@@ -2,7 +2,8 @@ class WebGraph:
     def __init__(self):
         self.pages = {}
     
-    # def add_page(self, )
+    def add_page(self, new_page):
+        self.pages[new_page.title] = new_page
 
 class Page:
     def __init__(self, title):
@@ -17,3 +18,5 @@ class Page:
             self.links[title] = 1
         else:
             self.links[title] += 1
+
+    
