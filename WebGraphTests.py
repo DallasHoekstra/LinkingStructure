@@ -6,6 +6,7 @@ import WebGraph as WG
 def test_Web_Graph_initializes_empty():
     test_wg = WG.WebGraph()
     assert len(test_wg.pages) == 0
+    assert len(test_wg.url_set) == 0
 
 def test_Page_initializes_with_provided_title():
 
@@ -52,3 +53,45 @@ def test_Web_Graph_add_page_adds_page_to_pages():
     test_graph.add_page(test_page)
 
     assert test_graph.pages[test_page.title].title == test_page.title
+
+def test_Web_Graph_add_page_returns_novel_links():
+    title1 = "www.bestcreditcards.com"
+    title2 = "www.bestmortgage.com"
+    title3 = "www.bestmobilebankingapps.com"
+    title4 = "www.bestmobileplans.com"
+
+    test_page = WG.Page(title1)
+    test_page.add_link(title2)
+    test_page.add_link(title4)
+
+    test_graph = WG.WebGraph()
+    title2_return = test_graph.add_page(test_page)
+
+    assert title2 in title2_return
+    assert title4 in title2_return
+    assert len(title2_return) == 2
+
+    test_page2 = WG.Page(title2)
+    test_page2.add_link(title3)
+    test_page2.add_link(title4)
+    title3_return = test_graph.add_page(test_page2)
+
+    # Assert novelty of links
+    assert title3 in title3_return
+    assert len(title3_return) == 1
+
+def test_Web_Graph_add_page_adds_links_to_set():
+    title1 = "www.bestcreditcards.com"
+    title2 = "www.bestmortgage.com"
+    title3 = "www.bestmobilebankingapps.com"
+
+    test_page = WG.Page(title1)
+    test_page.add_link(title2)
+    test_page.add_link(title3)
+
+    test_graph = WG.WebGraph()
+    test_graph.add_page(test_page)
+
+    assert title2 in test_graph.url_set
+    assert title3 in test_graph.url_set
+
