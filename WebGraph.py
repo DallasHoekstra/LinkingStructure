@@ -4,6 +4,10 @@ class WebGraph:
         self.url_set = set()
     
     def add_page(self, new_page):
+        # ignore duplicate visits
+        if new_page.title in self.pages:
+            return None
+
         self.pages[new_page.title] = new_page
         novel_links = []
         for link in new_page.links:

@@ -94,4 +94,3 @@ def test_Web_Graph_add_page_adds_links_to_set():
 
     assert title2 in test_graph.url_set
     assert title3 in test_graph.url_set
-
