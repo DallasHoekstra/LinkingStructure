@@ -14,8 +14,9 @@ import LinkingStructure as LS
 
 class Response_Object():
     def __init__(self, *args, **kwargs):
-        self.status = kwargs['status']
+        self.status_code = kwargs['status']
         self.text = kwargs['data']
+        self.url = None
 
 def generate_sample_html():
         sample_page = """<html> 
@@ -41,7 +42,7 @@ def test_download_urls_opens_correct_initial_url(mock_requests_get):
     LS.download_url(target_url)
 
     mock_requests_get.assert_called()
-    mock_requests_get.assert_called_with(target_url)
+    mock_requests_get.assert_called_with(target_url, verify=False)
 
 @pytest.mark.parametrize("status", [("404"), ("400"), ("500")])
 @patch("requests.get")
