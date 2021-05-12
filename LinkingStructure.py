@@ -1,11 +1,7 @@
 import sys
-# import os
-# from os import path
 import requests
 from bs4 import BeautifulSoup
-import re
 import WebGraph as graph
-# import time
 # import json
 # import csv
 
@@ -14,8 +10,9 @@ def download_url(target_url):
     try:
         response = requests.get(target_url, verify=False)
     except:
-        raise Exception(f'unable to download {target_url}')
         log(f'response received was: {response.status_code}, {response.text}, {response.url}')
+        raise Exception(f'unable to download {target_url}')
+        
     else:    
         if int(response.status_code) >= 200 and int(response.status_code) < 400:
             return response
@@ -28,10 +25,9 @@ def extract_links_and_title(html_page):
     soup = BeautifulSoup(html_page, 'html.parser')
 
     links = []
-    for anchor in soup.find_all("a"):
+    for anchor in soup.find_all("a", {'href':True}):
         try:
-            if anchor['href'][0] == 'h':
-                links.append(anchor['href'])
+            links.append(anchor['href'])
         except Exception as error:
             log(str(error))
     title = soup.find("title")
